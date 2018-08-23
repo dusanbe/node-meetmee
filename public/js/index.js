@@ -3,12 +3,15 @@ var socket = io();
 jQuery("#userForm").on('submit', function (e) {
     e.preventDefault();
 
+    var userName = jQuery('[name=userName]').val();
+    var userMessage = jQuery('[name=userMessage]').val();
+
     navigator.geolocation.getCurrentPosition(function (position) {
         socket.emit('newUserInfo', {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            userName: jQuery('[name=userName]').val(),
-            userMessage: jQuery('[name=userMessage]').val()
+            userName: userName,
+            userMessage: userMessage
         }, function () {
             console.log('New users location succesfully sent!');
         });
@@ -17,24 +20,23 @@ jQuery("#userForm").on('submit', function (e) {
     });
 })
 
-function sendLocation () {
-    console.log('Sending location...');
-
-    navigator.geolocation.getCurrentPosition(function (position) {
-        socket.emit('newUserLocation', {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-        }, function () {
-            console.log('New users location succesfully sent!');
-        });
-    }, function () {
-        alert('Unable to fetch location.')
-    });
-};
-
 socket.on('locationsUpdate', function (locationsArray) {
     displayLocations(locationsArray);
 });
+
+socket.on('disconnect', function () {
+    removeUser(userName);
+    displayLocations(locationsArray);
+});
+
+function removeUser (userName) {
+    locationsArray.forEach(element => {
+        if (element.userName === userName) {
+            locationsArray.latitude = undefined;
+            locationsArray.longitude = undefined;
+        }
+    });
+};
 
 var mymap = L.map('mapid');
 
