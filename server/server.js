@@ -20,9 +20,13 @@ io.on('connection', (socket) => {
 
     socket.on('newUserInfo', (coords, callBack) => {
         callBack();
-
         locationsArray.push(coords);
-        
+        io.emit('locationsUpdate', locationsArray);
+    });
+
+    socket.on('userLeft', (userName, callBack) => {
+        callBack();
+        removeUser(userName);
         io.emit('locationsUpdate', locationsArray);
     });
 });
@@ -30,3 +34,12 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
+
+function removeUser (userName) {
+    locationsArray.forEach(element => {
+        if (element.userName === userName) {
+            locationsArray.latitude = undefined;
+            locationsArray.longitude = undefined;
+        }
+    });
+};

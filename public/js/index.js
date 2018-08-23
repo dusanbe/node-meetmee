@@ -25,18 +25,11 @@ socket.on('locationsUpdate', function (locationsArray) {
 });
 
 socket.on('disconnect', function () {
-    removeUser(userName);
-    displayLocations(locationsArray);
+    socket.emit('userLeft', userName,
+        function () {
+            console.log('User who has left succesfully sent!');
+        });
 });
-
-function removeUser (userName) {
-    locationsArray.forEach(element => {
-        if (element.userName === userName) {
-            locationsArray.latitude = undefined;
-            locationsArray.longitude = undefined;
-        }
-    });
-};
 
 var mymap = L.map('mapid');
 
