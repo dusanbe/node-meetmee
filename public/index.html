@@ -2,17 +2,23 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/mystyle.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
 </head>
 <body>
-    <p>Welcome to my app!</p>
+    <h3>meet.mee</h3>
+    <img src="/img/icon.png" id="icon">
 
     <div id="mapid"></div>
 
-    <button type="submit" onclick="sendLocation()">Send and view locations</button>
-
+    <form id="userForm">
+        <input name="userName" type="text" placeholder="Enter your name" class="form-control" id="inputDefault" required style="margin: 10px; width: 300px;"/>
+        <input name="userMessage" type="text" placeholder="Enter your status" class="form-control" id="inputDefault" required style="margin: 10px; width: 300px;"/>
+        <button type="submit" class="btn btn-primary" style="margin: 10px;">Send and view locations</button>
+    </form>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>
     <script src="/js/index.js"></script>

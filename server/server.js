@@ -18,7 +18,7 @@ var locationsArray = [];
 io.on('connection', (socket) => {
     console.log('new user connected!');
 
-    socket.on('newUserLocation', (coords, callBack) => {
+    socket.on('newUserInfo', (coords, callBack) => {
         callBack();
 
         locationsArray.push(coords);
@@ -26,28 +26,6 @@ io.on('connection', (socket) => {
         io.emit('locationsUpdate', locationsArray);
     });
 });
-
-// io.on('newUsersLocation', (socket) => {
-//     socket.on('newUsersLocation', (coords, callBack) => {
-//         console.log('location received!');
-
-//         callBack();
-
-//         locationsArray.push(coords);
-        
-//         socket.emit('locationsUpdate', {
-//             locationsArray
-//         });
-//     });
-// });
-
-// function showPosition(position) {
-//     var latlon = position.latitude + "," + position.longitude;
-
-//     var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=+latlon+&zoom=14&size=400x300&sensor=false&key=YOUR_:KEY";
-
-//     document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-// }
 
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);
